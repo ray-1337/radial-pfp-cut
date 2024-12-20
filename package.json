@@ -1,6 +1,5 @@
 {
-  "name": "next-personal-template",
-  "version": "0.1.0",
+  "name": "radial-pfp-cut",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
