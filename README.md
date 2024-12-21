@@ -3,6 +3,9 @@ This is a project where you can pan and crop the image, and turn it into a perfe
 
 ![image](https://github.com/user-attachments/assets/0e89173d-3999-481c-b0cc-76a7dfa0e455)
 
+## Demo
+https://radial-pfp-cut.pages.dev
+
 ## Motive
 I created this because the Instagram browser doesn't have a pan-and-crop feature, and I have to transfer the profile picture to my phone via Bluetooth just to use that feature.
 
