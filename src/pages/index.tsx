@@ -17,14 +17,9 @@ export default function MainPage() {
   const [modalState, setModalState] = useState<boolean>(false);
   const [finalURL, setFinalURL] = useState<string | null>(null);
 
-  const imagePosition = useRef<[number, number]>([0, 0]);
-
   const changeImagePerception = (file: File | null) => {
     setImage(file);
     setScale(1);
-
-    imagePosition.current = [0, 0];
-
     return;
   };
 
@@ -162,7 +157,6 @@ export default function MainPage() {
                     scale={scale}
                     style={{height: windowWidth < 500 ? "224px" : "384px", width: "auto"}}
                     height={windowWidth < 500 ? 224 : 384} width={windowWidth < 500 ? 224 : 384}
-                    onPositionChange={({x, y}) => imagePosition.current = [x, y]}
                   />
 
                   <Text size={"10px"} c={"gray"}>
