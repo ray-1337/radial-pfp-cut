@@ -55,17 +55,13 @@ export default function MainPage() {
       // adapted from multiple sources:
       // https://stackoverflow.com/a/26350058
       // https://github.com/mosch/react-avatar-editor/
-      if (rect) {
-        ctx.drawImage(
-          img,
-          Math.round(-rect.x * (w / rect.width)),
-          Math.round(-rect.y * (h / rect.height)),
-          Math.round(w / rect.width),
-          Math.round(h / rect.height),
-        );
-      } else {
-        ctx.drawImage(img, 0, 0, w, h);
-      };
+      ctx.drawImage(
+        img,
+        rect ? Math.round(-rect.x * (w / rect.width)) : 0,
+        rect ? Math.round(-rect.y * (h / rect.height)) : 0,
+        rect ? Math.round(w / rect.width) : w,
+        rect ? Math.round(h / rect.height) : h,
+      );
 
       ctx.globalCompositeOperation = "destination-in";
       ctx.beginPath();
