@@ -11,6 +11,7 @@
     "@mantine/core": "^7.15.1",
     "@mantine/hooks": "^7.15.1",
     "next": "latest",
+    "normalize.css": "^8.0.1",
     "react": "latest",
     "react-avatar-editor": "^13.0.2",
     "react-dom": "latest"
