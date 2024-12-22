@@ -47,8 +47,16 @@ export default function MainPage() {
 
       // convert the image aspect ratio to a square (1:1)
       // for example, if the image resolution is 1000x1414, then the final result will be 1414x1414 and vice-versa
-      w = canvas.width = (img.height > img.width) ? img.height : img.width;
-      h = canvas.height = (img.height > img.width) ? img.height : img.width;
+      if (img.height > img.width) {
+        w = canvas.width = img.height;
+        h = canvas.height = img.height;
+      } else if (img.width > img.height) {
+        w = canvas.width = img.width;
+        h = canvas.height = img.width;
+      } else {
+        w = canvas.width = img.width;
+        h = canvas.height = img.height;
+      };
 
       const rect = editorRef.current?.getCroppingRect();
 
