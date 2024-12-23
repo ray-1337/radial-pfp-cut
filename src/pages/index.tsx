@@ -204,18 +204,18 @@ export default function MainPage() {
 
                 <Menu.Dropdown>
                   {
-                    ["image/jpg", "image/jpeg", "image/png", "image/webp"].map((type, index) => (
-                      <Menu.Item onClick={() => generatePreview(type)} key={"generate-menu-item-" + index}>
-                        Generate as .{type.split("/").pop()}
+                    ["jpg", "jpeg", "png", "webp"].map((type, index) => (
+                      <Menu.Item onClick={() => generatePreview("image/" + type)} key={"generate-menu-item-" + index}>
+                        Generate as .{type}
 
                         {
-                          type === "image/png" && (
+                          type === "png" && (
                             <Text size={"11px"} c={"gray"}>The background will be transparent.</Text>
                           )
                         }
 
                         {
-                          type === "image/webp" && (
+                          type === "webp" && (
                             <Text size={"10px"} c={"gray"}>This may affect the quality of the final image.</Text>
                           )
                         }
