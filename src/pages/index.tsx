@@ -221,7 +221,10 @@ export default function MainPage() {
 
                         {
                           type === "webp" && (
-                            <Text size={"10px"} c={"gray"}>This may affect the quality of the final image.</Text>
+                            <Fragment>
+                              <Text size={"10px"} c={"gray"}>This may affect the quality of the final image.</Text>
+                              <Text size={"10px"} c={"gray"}>The size of the image might be bigger.</Text>
+                            </Fragment>
                           )
                         }
                       </Menu.Item>
