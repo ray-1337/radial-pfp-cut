@@ -237,6 +237,8 @@ export default function MainPage() {
             {
               [
                 "Everything is processed through your browser. No third-parties ever involved.",
+                "Instead of uploading the image, you can also copy and paste image from somewhere by just hitting CTRL + V.",
+                "I don't test GIF, APNG or any animated file.",
                 "The final image will be served in a 1:1 aspect ratio.",
                 "The final image MIME type will match the input image, but you can change it to a different MIME type if you wish.",
                 "The final image resolution will depend on the larger dimension (width or height) of the original image. For example, if the original image is 1000x1414, the final image will have a resolution of 1414x1414.",
