@@ -1,7 +1,7 @@
 import { useState, Fragment, useRef } from "react";
 
 import { Box, Flex, Title, Slider, Menu, Anchor, Checkbox, Modal, Loader, Image as MantineImage, Text, Button, FileButton, Group, ActionIcon } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { useViewportSize, useWindowEvent } from "@mantine/hooks";
 import AvatarEditor from 'react-avatar-editor';
 
 const githubRepositoryURL: string = "https://github.com/ray-1337/radial-pfp-cut";
@@ -113,6 +113,32 @@ export default function MainPage() {
 
     return setModalState(false);
   };
+
+  useWindowEvent("paste", async (event) => {
+    event.preventDefault();
+
+    // adapted from https://web.dev/patterns/clipboard/paste-images
+    try {
+      if (!navigator?.clipboard) {
+        return alert("Unable to access your clipboard API. Make sure you're using the latest version of your current browser.");
+      };
+
+      const clipboardItems = await navigator.clipboard.read();
+      for (const clipboardItem of clipboardItems) {
+        const imageType = clipboardItem.types.find(type => type.startsWith('image/'));
+        if (typeof imageType !== "undefined") {
+          const blob = await clipboardItem.getType(imageType);
+          const file = new File([blob], String(Date.now()));
+          changeImagePerception(file);
+
+          break;
+        };
+      }
+    } catch (error) {
+      console.error(error);
+      return alert("An error occurred while trying to process the copied content from clipboard. Check developer tools for more information about the error.");
+    }
+  })
 
   return (
     <Fragment>
