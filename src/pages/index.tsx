@@ -1,6 +1,6 @@
 import { useState, Fragment, useRef } from "react";
 
-import { Box, Flex, Title, Slider, Menu, Anchor, Modal, Loader, Image as MantineImage, Text, Button, FileButton, Group, ActionIcon } from "@mantine/core";
+import { Box, Flex, Title, Slider, Menu, Anchor, Checkbox, Modal, Loader, Image as MantineImage, Text, Button, FileButton, Group, ActionIcon } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import AvatarEditor from 'react-avatar-editor';
 
@@ -9,6 +9,7 @@ const githubRepositoryURL: string = "https://github.com/ray-1337/radial-pfp-cut"
 export default function MainPage() {
   const [image, setImage] = useState<File | null>(null);
   const [scale, setScale] = useState<number>(1);
+  const [preserveEdges, setPreserveEdgesStatus] = useState<boolean>(false);
   const editorRef = useRef<AvatarEditor>(null);
 
   const { width: windowWidth } = useViewportSize();
@@ -23,7 +24,7 @@ export default function MainPage() {
     return;
   };
 
-  const generatePreview = (mimeType?: string) => {
+  const generatePreview = (mimeType?: string, preserveEdges?: boolean) => {
     if (!image) {
       return alert("Invalid image.");
     };
@@ -71,11 +72,13 @@ export default function MainPage() {
         rect ? Math.round(h / rect.height) : h,
       );
 
-      ctx.globalCompositeOperation = "destination-in";
-      ctx.beginPath();
-      ctx.arc(w / 2, h / 2, h / 2, 0, Math.PI*2);
-      ctx.closePath();
-      ctx.fill();
+      if (!preserveEdges) {
+        ctx.globalCompositeOperation = "destination-in";
+        ctx.beginPath();
+        ctx.arc(w / 2, h / 2, h / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      };
 
       URL.revokeObjectURL(url);
 
@@ -151,7 +154,7 @@ export default function MainPage() {
           {/* avatar editor */}
           {
             image !== null && (
-              <Flex direction={"column"} gap={"md"}>
+              <Flex direction={"column"} gap={"lg"}>
                 {/* avatar preview */}
                 <Flex direction={"column"} gap={6}>
                   <AvatarEditor
@@ -167,6 +170,8 @@ export default function MainPage() {
                     * Hover and drag the picture to set the cropping position.
                   </Text>
                 </Flex>
+
+                <Checkbox label={"Preserve edges"} description={"Keep the edges from being cropped into transparent."} onChange={(event) => setPreserveEdgesStatus(event.target.checked)} />
 
                 <Flex direction={"column"} gap={"xs"}>
                   <Text size="sm">Zoom</Text>
@@ -193,7 +198,7 @@ export default function MainPage() {
             </FileButton>
 
             <Group gap={0}>
-              <Button style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}} disabled={image === null} onClick={() => generatePreview()}>Generate preview</Button>
+              <Button style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}} disabled={image === null} onClick={() => generatePreview(undefined, preserveEdges)}>Generate preview</Button>
 
               <Menu withArrow shadow={"lg"}>
                 <Menu.Target>
@@ -205,7 +210,7 @@ export default function MainPage() {
                 <Menu.Dropdown>
                   {
                     ["jpg", "jpeg", "png", "webp"].map((type, index) => (
-                      <Menu.Item onClick={() => generatePreview("image/" + type)} key={"generate-menu-item-" + index}>
+                      <Menu.Item onClick={() => generatePreview("image/" + type, preserveEdges)} key={"generate-menu-item-" + index}>
                         Generate as .{type}
 
                         {
